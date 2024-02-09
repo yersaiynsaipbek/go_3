@@ -1,0 +1,9 @@
+package models
+
+var (
+	ADMIN_ROLE     = "ADMIN"
+	TEACHER_ROLE   = "TEACHER"
+	STUDENT_ROLE   = "STUDENT"
+	APPLICANT_ROLE = "APPLICANT"
+	MANAGER_ROLE   = "MANAGER"
+)

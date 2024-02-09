@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>User Update</title>
+</head>
+<body>
+<div class="container mt-5">
+    <h2>User Update</h2>
+    <form id="updateForm">
+        <div class="mb-3">
+            <input type="text" class="form-control" id="id" name="id" value="{{.ID}}" hidden="hidden">
+        </div>
+        <div class="mb-3">
+            <label for="name" class="form-label">Name</label>
+            <input type="text" class="form-control" id="name" name="name" value="{{.Name}}" required>
+        </div>
+        <div class="mb-3">
+            <label for="surname" class="form-label">Surname</label>
+            <input type="text" class="form-control" id="surname" name="surname" value="{{.Surname}}" required>
+        </div>
+        <div class="mb-3">
+            <label for="username" class="form-label">Username</label>
+            <input type="text" class="form-control" id="username" name="username" value="{{.Username}}" required>
+        </div>
+        <div class="mb-3">
+            <input type="password" class="form-control" id="password" name="password" value="{{.Password}}" hidden="hidden">
+        </div>
+        <div class="mb-3">
+            <label for="role" class="form-label">Role</label>
+            <select class="form-select" id="role" name="role" required>
+                <option value="STUDENT" {{if eq .Role "STUDENT"}}selected{{end}}>Student</option>
+                <option value="TEACHER" {{if eq .Role "TEACHER"}}selected{{end}}>Teacher</option>
+                <option value="ADMIN" {{if eq .Role "ADMIN"}}selected{{end}}>Admin</option>
+            </select>
+        </div>
+        <button type="button" class="btn btn-primary" id="updateButton">Update</button>
+    </form>
+</div>
+<script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+<script>
+    $(document).ready(function() {
+        $("#updateButton").click(function() {
+            id = parseInt($("#id").val())
+            var userData = {
+                id: id,
+                name: $("#name").val(),
+                surname: $("#surname").val(),
+                username: $("#username").val(),
+                password: $("#password").val(),
+                role: $("#role option:selected").val()
+            };
+
+            console.log(userData.role)
+
+            $.ajax({
+                type: "PUT",
+                url: "http://localhost:3000/admin/users/" + id + "/update",
+                data: JSON.stringify(userData),
+                contentType: "application/json",
+                success: function(response) {
+                    window.location.reload()
+                },
+                error: function(xhr, status, error) {
+                    alert("Error updating user:" + error);
+                }
+            });
+        });
+    });
+</script>
+</body>
+</html>
